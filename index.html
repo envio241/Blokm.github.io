@@ -3,294 +3,277 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Video Player</title>
-
-
--->
+<meta name="theme-color" content="#09090f">
+<title>VideoSpace | Watch Video</title>
 
 <style>
 * {
+margin: 0;
+padding: 0;
 box-sizing: border-box;
 }
 
 body {
-margin: 0;
-background: #101010;
-color: white;
 font-family: Arial, sans-serif;
+background: #09090f;
+color: #fff;
+min-height: 100vh;
 }
 
 header {
-background: #181818;
-padding: 16px;
-text-align: center;
-border-bottom: 1px solid #303030;
+padding: 22px 7%;
+display: flex;
+justify-content: space-between;
+align-items: center;
+border-bottom: 1px solid #252532;
 }
 
-header h2 {
-margin: 0;
-font-size: 22px;
+.logo {
+font-size: 25px;
+font-weight: bold;
+color: #a78bfa;
+}
+
+.status {
+font-size: 13px;
+color: #aaa;
 }
 
 main {
-width: 100%;
-max-width: 850px;
-margin: 25px auto;
-padding: 15px;
+max-width: 1050px;
+margin: 45px auto;
+padding: 0 22px;
 }
 
-.upload-area {
+.intro {
 text-align: center;
-margin-bottom: 20px;
+margin-bottom: 30px;
 }
 
-.upload-button {
+.intro h1 {
+font-size: clamp(28px, 5vw, 44px);
+margin-bottom: 12px;
+}
+
+.intro p {
+color: #a1a1b5;
+line-height: 1.7;
+}
+
+.ad-area {
+margin: 22px 0;
+padding: 18px;
+text-align: center;
+background: #12121b;
+border: 1px solid #28283a;
+border-radius: 12px;
+}
+
+.ad-label {
+color: #85859b;
+font-size: 11px;
+margin-bottom: 10px;
+text-transform: uppercase;
+letter-spacing: 2px;
+}
+
+.sponsor-link {
 display: inline-block;
-background: #e50914;
-color: white;
-padding: 12px 25px;
-border: none;
-border-radius: 5px;
-font-size: 16px;
-cursor: pointer;
+padding: 11px 20px;
+color: #fff;
+background: #49328a;
+text-decoration: none;
+border-radius: 8px;
+font-size: 14px;
 }
 
-.upload-button:hover,
-.continue-button:hover {
-background: #b80710;
+.sponsor-link:hover {
+background: #6245b4;
 }
 
-.video-box {
-background: #000;
-width: 100%;
-aspect-ratio: 16 / 9;
-display: flex;
-align-items: center;
-justify-content: center;
-overflow: hidden;
-border-radius: 7px;
+.video-container {
+background: #15151f;
+padding: 10px;
+border: 1px solid #303044;
+border-radius: 18px;
+box-shadow: 0 20px 70px #0008;
 }
 
 video {
+display: block;
 width: 100%;
-height: 100%;
-object-fit: contain;
-}
-
-.placeholder {
-color: #aaa;
-text-align: center;
-padding: 20px;
+aspect-ratio: 16 / 9;
+background: #000;
+border-radius: 10px;
 }
 
 .video-info {
-background: #1c1c1c;
-padding: 16px;
-margin-top: 12px;
-border-radius: 6px;
-}
-
-.video-info h3 {
-margin-top: 0;
-}
-
-.modal {
-position: fixed;
-inset: 0;
-background: rgba(0, 0, 0, 0.92);
 display: flex;
 align-items: center;
-justify-content: center;
-padding: 20px;
-z-index: 10;
+justify-content: space-between;
+flex-wrap: wrap;
+gap: 15px;
+padding: 22px 5px 10px;
 }
 
-.modal-content {
-width: 100%;
-max-width: 390px;
-background: #202020;
-border-radius: 10px;
-padding: 25px;
-text-align: center;
+.video-info h2 {
+font-size: 20px;
+margin-bottom: 8px;
 }
 
-.modal-content h2 {
-margin-top: 0;
+.video-info p {
+color: #a1a1b5;
+font-size: 14px;
 }
 
-.modal-content p {
-color: #ccc;
-line-height: 1.6;
+.tag {
+background: #29213f;
+color: #c4b5fd;
+padding: 9px 14px;
+border-radius: 20px;
+font-size: 12px;
 }
 
-.continue-button {
-background: #e50914;
-color: white;
-border: none;
-padding: 12px 22px;
-border-radius: 5px;
-cursor: pointer;
-font-size: 15px;
-margin-top: 10px;
-}
-
-.hidden {
-display: none !important;
+.notice {
+margin-top: 20px;
+background: #12121b;
+border: 1px solid #28283a;
+border-radius: 12px;
+padding: 18px;
+color: #aaa;
+font-size: 14px;
+line-height: 1.7;
 }
 
 footer {
 text-align: center;
-color: #888;
-padding: 25px 10px;
+color: #77778b;
+padding: 25px 15px;
 font-size: 13px;
+}
+
+@media (max-width: 600px) {
+header {
+padding: 18px 20px;
+}
+
+main {
+margin: 30px auto;
+padding: 0 14px;
+}
+
+.video-container {
+padding: 6px;
+border-radius: 12px;
+}
+
+.video-info h2 {
+font-size: 18px;
+}
 }
 </style>
 </head>
 
 <body>
 <header>
-<h2>Video Player</h2>
+<div class="logo">VideoSpace.</div>
+<div class="status">● Video Player</div>
 </header>
 
 <main>
-<div class="upload-area">
-<label for="videoUpload" class="upload-button">
-Upload Video
-</label>
+<section class="intro">
+<h1>Watch Your Video</h1>
+<p>
+Selamat datang di VideoSpace.<br>
+Nikmati video favoritmu kapan saja.
+</p>
+</section>
 
-<input
-type="file"
-id="videoUpload"
-accept="video/mp4,video/webm,video/ogg"
-hidden
+<!-- AREA IKLAN POPUNDER / SPONSOR -->
+<section class="ad-area">
+<div class="ad-label">Advertisement</div>
+<a
+class="sponsor-link"
+href="https://cleavegrate.com/n48ddaqe2e?key=50475bbbba58881ff9d633fa4ed03766"
+target="_blank"
+rel="sponsored nofollow noopener noreferrer"
 >
-</div>
+Kunjungi Sponsor
+</a>
+</section>
 
-<div class="video-box">
-<div class="placeholder" id="placeholder">
-<p>Video belum dipilih</p>
-<p>Pilih tombol Upload Video untuk memutar video</p>
-</div>
-
-<video id="player" controls class="hidden">
-Browser kamu tidak mendukung pemutar video.
+<!-- PEMUTAR VIDEO -->
+<section class="video-container">
+<video
+id="myVideo"
+controls
+playsinline
+preload="metadata"
+>
+<source
+src="https://videotourl.com/videos/1791992724770-f5ebc618-9375-4a3f-ba87-ea712f93f8dc.mp4"
+type="video/mp4"
+>
+Browser kamu tidak mendukung pemutar video HTML5.
 </video>
-</div>
 
 <div class="video-info">
-<h3 id="videoTitle">Video Player</h3>
-<p id="videoDescription">
-Pilih file video dari perangkat kamu untuk mulai menonton.
+<div>
+<h2>Video Pilihan</h2>
+<p>Format MP4 · Pemutar responsif</p>
+</div>
+<span class="tag">VIDEO</span>
+</div>
+</section>
+
+<!-- AREA IKLAN TAMBAHAN -->
+<section class="ad-area">
+<div class="ad-label">Advertisement</div>
+<p style="color:#aaa;font-size:13px">
+Terima kasih telah mengunjungi VideoSpace.
 </p>
+</section>
+
+<div class="notice" id="notice">
+Klik tombol Play untuk mulai menonton.
 </div>
 </main>
 
 <footer>
-Video Player © 2026
+© <span id="year"></span> VideoSpace. All rights reserved.
 </footer>
 
-<div class="modal" id="ageModal">
-<div class="modal-content">
-<h2>Konfirmasi Usia 18+</h2>
-
-<p>
-Silakan konfirmasi bahwa kamu berusia
-minimal 18 tahun sebelum melanjutkan.
-</p>
-
-<button class="continue-button" id="continueButton">
-Saya berusia 18+ · LANJUT
-</button>
-</div>
-</div>
-
 <script>
-  const upload = document.getElementById("videoUpload");
-  const player = document.getElementById("player");
-  const placeholder = document.getElementById("placeholder");
-  const title = document.getElementById("videoTitle");
-  const description = document.getElementById("videoDescription");
-  const ageModal = document.getElementById("ageModal");
-  const continueButton = document.getElementById("continueButton");
+document.getElementById("year").textContent =
+new Date().getFullYear();
 
-  const VIDEO_URL =
-"https://videotourl.com/videos/1791993868833-19763b52-c2ce-4c06-9d9d-3ffe102c3ad6.mp4";
+const video = document.getElementById("myVideo");
+const notice = document.getElementById("notice");
 
-  const shopeeLink =
-    "https://s.shopee.co.id/4B0iZUcobL";
+video.addEventListener("error", function () {
+notice.textContent =
+"Video gagal dimuat. Periksa koneksi internet " +
+"atau pastikan link video masih aktif.";
+});
 
-  const directLink =
-    "https://cleavegrate.com/n48ddaqe2e?key=50475bbbba58881ff9d633fa4ed03766";
+video.addEventListener("playing", function () {
+notice.textContent =
+"Video sedang diputar. Selamat menonton!";
+});
 
-  let currentVideoURL = null;
+video.addEventListener("pause", function () {
+if (!video.ended && video.currentTime > 0) {
+notice.textContent = "Video dijeda.";
+}
+});
 
-  // Konfirmasi usia dan buka link Shopee
-  continueButton.addEventListener("click", function () {
-    window.open(shopeeLink, "_blank", "noopener,noreferrer");
-    ageModal.classList.add("hidden");
-  });
-
-  // Menangani video online bawaan
-  player.addEventListener("loadedmetadata", function () {
-    if (
-      player.currentSrc === defaultVideoURL ||
-      player.src === defaultVideoURL
-    ) {
-      placeholder.classList.add("hidden");
-    }
-  });
-
-  // Menangani error video
-  player.addEventListener("error", function () {
-    if (!currentVideoURL) {
-      placeholder.classList.remove("hidden");
-      placeholder.innerHTML =
-        "<p>Video gagal dimuat. Periksa koneksi atau tautan video.</p>";
-    }
-  });
-
-  // Upload video dari perangkat
-  upload.addEventListener("change", function () {
-    const file = this.files[0];
-
-    if (!file) return;
-
-    if (!file.type.startsWith("video/")) {
-      alert("Silakan pilih file video yang valid.");
-      this.value = "";
-      return;
-    }
-
-    if (currentVideoURL) {
-      URL.revokeObjectURL(currentVideoURL);
-    }
-
-    currentVideoURL = URL.createObjectURL(file);
-
-    player.pause();
-    player.src = currentVideoURL;
-    player.load();
-
-    player.classList.remove("hidden");
-    placeholder.classList.add("hidden");
-
-    title.textContent = file.name;
-    description.textContent =
-      "Ukuran file: " +
-      (file.size / (1024 * 1024)).toFixed(2) +
-      " MB";
-
-    player.play().catch(function () {});
-  });
-
-  // Membersihkan URL video lokal
-  window.addEventListener("beforeunload", function () {
-    if (currentVideoURL) {
-      URL.revokeObjectURL(currentVideoURL);
-    }
-  });
+video.addEventListener("ended", function () {
+notice.textContent = "Video selesai ditonton.";
+});
 </script>
 
-<!-- Script iklan dari penyedia -->
+<!-- SCRIPT IKLAN DIRECT ADSTERRA -->
 <script src="https://cleavegrate.com/81/86/7d/81867d74d56554ace10a2edb1a966b3d.js"></script>
 
+</body>
+</html>
