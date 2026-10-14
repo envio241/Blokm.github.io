@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -43,6 +42,7 @@
     }
 
     .upload-button {
+      display: inline-block;
       background: #e50914;
       color: white;
       padding: 12px 25px;
@@ -84,6 +84,7 @@
       padding: 16px;
       margin-top: 12px;
       border-radius: 6px;
+      overflow-wrap: anywhere;
     }
 
     .video-info h3 {
@@ -131,7 +132,7 @@
     }
 
     .hidden {
-      display: none;
+      display: none !important;
     }
 
     footer {
@@ -163,20 +164,23 @@
     </div>
 
     <div class="video-box">
-      <div class="placeholder" id="placeholder">
-        <p>Video belum dipilih</p>
-        <p>Pilih tombol Upload Video untuk memutar video</p>
+      <div class="placeholder hidden" id="placeholder">
+        <p>Video belum tersedia.</p>
       </div>
 
-      <video id="player" controls class="hidden">
+      <video id="player" controls playsinline preload="metadata">
+        <source
+          src="https://videotourl.com/videos/1791989161964-e0c6bcb0-8083-44e6-9216-a0e315600056.mp4"
+          type="video/mp4"
+        >
         Browser kamu tidak mendukung pemutar video.
       </video>
     </div>
 
     <div class="video-info">
-      <h3 id="videoTitle">Video Player</h3>
+      <h3 id="videoTitle">Video Online</h3>
       <p id="videoDescription">
-        Pilih file video dari perangkat kamu untuk mulai menonton.
+        Video dimuat dari tautan online.
       </p>
     </div>
   </main>
@@ -205,17 +209,37 @@
     const player = document.getElementById("player");
     const placeholder = document.getElementById("placeholder");
     const title = document.getElementById("videoTitle");
-    const description =
-      document.getElementById("videoDescription");
+    const description = document.getElementById("videoDescription");
+    const ageModal = document.getElementById("ageModal");
+
+    const defaultVideoURL =
+      "https://videotourl.com/videos/1791989161964-e0c6bcb0-8083-44e6-9216-a0e315600056.mp4";
 
     let currentVideoURL = null;
 
     document
       .getElementById("continueButton")
       .addEventListener("click", function () {
-        document.getElementById("ageModal").classList.add("hidden");
+        ageModal.classList.add("hidden");
       });
 
+    // Menangani video online bawaan
+    player.addEventListener("loadedmetadata", function () {
+      if (player.src === defaultVideoURL ||
+          player.currentSrc === defaultVideoURL) {
+        placeholder.classList.add("hidden");
+      }
+    });
+
+    player.addEventListener("error", function () {
+      if (!player.currentSrc && !currentVideoURL) {
+        placeholder.classList.remove("hidden");
+        placeholder.innerHTML =
+          "<p>Video gagal dimuat. Periksa koneksi atau tautan video.</p>";
+      }
+    });
+
+    // Upload video dari perangkat
     upload.addEventListener("change", function () {
       const file = this.files[0];
 
@@ -232,7 +256,11 @@
       }
 
       currentVideoURL = URL.createObjectURL(file);
+
+      player.pause();
       player.src = currentVideoURL;
+      player.load();
+
       player.classList.remove("hidden");
       placeholder.classList.add("hidden");
 
@@ -242,9 +270,12 @@
         (file.size / (1024 * 1024)).toFixed(2) +
         " MB";
 
-      player.load();
+      player.play().catch(function () {
+        // Pengguna dapat menekan tombol Play secara manual.
+      });
     });
 
+    // Membersihkan URL video lokal
     window.addEventListener("beforeunload", function () {
       if (currentVideoURL) {
         URL.revokeObjectURL(currentVideoURL);
