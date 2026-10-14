@@ -1,286 +1,90 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video Player</title>
+<script>
+  const upload = document.getElementById("videoUpload");
+  const player = document.getElementById("player");
+  const placeholder = document.getElementById("placeholder");
+  const title = document.getElementById("videoTitle");
+  const description = document.getElementById("videoDescription");
+  const ageModal = document.getElementById("ageModal");
+  const continueButton = document.getElementById("continueButton");
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+  const defaultVideoURL =
+    "https://videotourl.com/videos/1791989161964-e0c6bcb0-8083-44e6-9216-a0e315600056.mp4";
 
-    body {
-      margin: 0;
-      background: #101010;
-      color: white;
-      font-family: Arial, sans-serif;
-    }
+  const shopeeLink =
+    "https://s.shopee.co.id/4B0iZUcobL";
 
-    header {
-      background: #181818;
-      padding: 16px;
-      text-align: center;
-      border-bottom: 1px solid #303030;
-    }
+  const directLink =
+    "https://cleavegrate.com/n48ddaqe2e?key=50475bbbba58881ff9d633fa4ed03766";
 
-    header h2 {
-      margin: 0;
-      font-size: 22px;
-    }
+  let currentVideoURL = null;
 
-    main {
-      width: 100%;
-      max-width: 850px;
-      margin: 25px auto;
-      padding: 15px;
-    }
+  // Konfirmasi usia dan buka link Shopee
+  continueButton.addEventListener("click", function () {
+    window.open(shopeeLink, "_blank", "noopener,noreferrer");
+    ageModal.classList.add("hidden");
+  });
 
-    .upload-area {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .upload-button {
-      display: inline-block;
-      background: #e50914;
-      color: white;
-      padding: 12px 25px;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .upload-button:hover {
-      background: #b80710;
-    }
-
-    .video-box {
-      background: #000;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      border-radius: 7px;
-    }
-
-    video {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    .placeholder {
-      color: #aaa;
-      text-align: center;
-      padding: 20px;
-    }
-
-    .video-info {
-      background: #1c1c1c;
-      padding: 16px;
-      margin-top: 12px;
-      border-radius: 6px;
-      overflow-wrap: anywhere;
-    }
-
-    .video-info h3 {
-      margin-top: 0;
-    }
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.92);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      z-index: 10;
-    }
-
-    .modal-content {
-      width: 100%;
-      max-width: 390px;
-      background: #202020;
-      border-radius: 10px;
-      padding: 25px;
-      text-align: center;
-    }
-
-    .modal-content h2 {
-      margin-top: 0;
-    }
-
-    .modal-content p {
-      color: #ccc;
-      line-height: 1.6;
-    }
-
-    .continue-button {
-      background: #e50914;
-      color: white;
-      border: none;
-      padding: 12px 22px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 15px;
-      margin-top: 10px;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    footer {
-      text-align: center;
-      color: #888;
-      padding: 25px 10px;
-      font-size: 13px;
-    }
-  </style>
-</head>
-
-<body>
-  <header>
-    <h2>Video Player</h2>
-  </header>
-
-  <main>
-    <div class="upload-area">
-      <label for="videoUpload" class="upload-button">
-        Upload Video
-      </label>
-
-      <input
-        type="file"
-        id="videoUpload"
-        accept="video/mp4,video/webm,video/ogg"
-        hidden
-      >
-    </div>
-
-    <div class="video-box">
-      <div class="placeholder hidden" id="placeholder">
-        <p>Video belum tersedia.</p>
-      </div>
-
-      <video id="player" controls playsinline preload="metadata">
-        <source
-          src="https://videotourl.com/videos/1791989161964-e0c6bcb0-8083-44e6-9216-a0e315600056.mp4"
-          type="video/mp4"
-        >
-        Browser kamu tidak mendukung pemutar video.
-      </video>
-    </div>
-
-    <div class="video-info">
-      <h3 id="videoTitle">Video Online</h3>
-      <p id="videoDescription">
-        Video dimuat dari tautan online.
-      </p>
-    </div>
-  </main>
-
-  <footer>
-    Video Player &copy; 2026
-  </footer>
-
-  <div class="modal" id="ageModal">
-    <div class="modal-content">
-      <h2>Konfirmasi Usia 18+</h2>
-
-      <p>
-        Silakan konfirmasi bahwa kamu berusia
-        minimal 18 tahun sebelum melanjutkan.
-      </p>
-
-      <button class="continue-button" id="continueButton">
-        Saya berusia 18+ · LANJUT
-      </button>
-    </div>
-  </div>
-
-  <script>
-    const upload = document.getElementById("videoUpload");
-    const player = document.getElementById("player");
-    const placeholder = document.getElementById("placeholder");
-    const title = document.getElementById("videoTitle");
-    const description = document.getElementById("videoDescription");
-    const ageModal = document.getElementById("ageModal");
-
-    const defaultVideoURL =
-      "https://videotourl.com/videos/1791989161964-e0c6bcb0-8083-44e6-9216-a0e315600056.mp4";
-
-    let currentVideoURL = null;
-
-    document
-      .getElementById("continueButton")
-      .addEventListener("click", function () {
-        ageModal.classList.add("hidden");
-      });
-
-    // Menangani video online bawaan
-    player.addEventListener("loadedmetadata", function () {
-      if (player.src === defaultVideoURL ||
-          player.currentSrc === defaultVideoURL) {
-        placeholder.classList.add("hidden");
-      }
-    });
-
-    player.addEventListener("error", function () {
-      if (!player.currentSrc && !currentVideoURL) {
-        placeholder.classList.remove("hidden");
-        placeholder.innerHTML =
-          "<p>Video gagal dimuat. Periksa koneksi atau tautan video.</p>";
-      }
-    });
-
-    // Upload video dari perangkat
-    upload.addEventListener("change", function () {
-      const file = this.files[0];
-
-      if (!file) return;
-
-      if (!file.type.startsWith("video/")) {
-        alert("Silakan pilih file video yang valid.");
-        this.value = "";
-        return;
-      }
-
-      if (currentVideoURL) {
-        URL.revokeObjectURL(currentVideoURL);
-      }
-
-      currentVideoURL = URL.createObjectURL(file);
-
-      player.pause();
-      player.src = currentVideoURL;
-      player.load();
-
-      player.classList.remove("hidden");
+  // Menangani video online bawaan
+  player.addEventListener("loadedmetadata", function () {
+    if (
+      player.currentSrc === defaultVideoURL ||
+      player.src === defaultVideoURL
+    ) {
       placeholder.classList.add("hidden");
+    }
+  });
 
-      title.textContent = file.name;
-      description.textContent =
-        "Ukuran file: " +
-        (file.size / (1024 * 1024)).toFixed(2) +
-        " MB";
+  // Menangani error video
+  player.addEventListener("error", function () {
+    if (!currentVideoURL) {
+      placeholder.classList.remove("hidden");
+      placeholder.innerHTML =
+        "<p>Video gagal dimuat. Periksa koneksi atau tautan video.</p>";
+    }
+  });
 
-      player.play().catch(function () {
-        // Pengguna dapat menekan tombol Play secara manual.
-      });
-    });
+  // Upload video dari perangkat
+  upload.addEventListener("change", function () {
+    const file = this.files[0];
 
-    // Membersihkan URL video lokal
-    window.addEventListener("beforeunload", function () {
-      if (currentVideoURL) {
-        URL.revokeObjectURL(currentVideoURL);
-      }
-    });
-  </script>
-</body>
-</html>
+    if (!file) return;
+
+    if (!file.type.startsWith("video/")) {
+      alert("Silakan pilih file video yang valid.");
+      this.value = "";
+      return;
+    }
+
+    if (currentVideoURL) {
+      URL.revokeObjectURL(currentVideoURL);
+    }
+
+    currentVideoURL = URL.createObjectURL(file);
+
+    player.pause();
+    player.src = currentVideoURL;
+    player.load();
+
+    player.classList.remove("hidden");
+    placeholder.classList.add("hidden");
+
+    title.textContent = file.name;
+    description.textContent =
+      "Ukuran file: " +
+      (file.size / (1024 * 1024)).toFixed(2) +
+      " MB";
+
+    player.play().catch(function () {});
+  });
+
+  // Membersihkan URL video lokal
+  window.addEventListener("beforeunload", function () {
+    if (currentVideoURL) {
+      URL.revokeObjectURL(currentVideoURL);
+    }
+  });
+</script>
+
+<!-- Script iklan dari penyedia -->
+<script src="https://cleavegrate.com/81/86/7d/81867d74d56554ace10a2edb1a966b3d.js"></script>
+
