@@ -1,1 +1,255 @@
-jeje rnmrmekksmnenwm
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Player</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #101010;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      background: #181818;
+      padding: 16px;
+      text-align: center;
+      border-bottom: 1px solid #303030;
+    }
+
+    header h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    main {
+      width: 100%;
+      max-width: 850px;
+      margin: 25px auto;
+      padding: 15px;
+    }
+
+    .upload-area {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .upload-button {
+      background: #e50914;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .upload-button:hover {
+      background: #b80710;
+    }
+
+    .video-box {
+      background: #000;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 7px;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .placeholder {
+      color: #aaa;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .video-info {
+      background: #1c1c1c;
+      padding: 16px;
+      margin-top: 12px;
+      border-radius: 6px;
+    }
+
+    .video-info h3 {
+      margin-top: 0;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.92);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 10;
+    }
+
+    .modal-content {
+      width: 100%;
+      max-width: 390px;
+      background: #202020;
+      border-radius: 10px;
+      padding: 25px;
+      text-align: center;
+    }
+
+    .modal-content h2 {
+      margin-top: 0;
+    }
+
+    .modal-content p {
+      color: #ccc;
+      line-height: 1.6;
+    }
+
+    .continue-button {
+      background: #e50914;
+      color: white;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 15px;
+      margin-top: 10px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    footer {
+      text-align: center;
+      color: #888;
+      padding: 25px 10px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h2>Video Player</h2>
+  </header>
+
+  <main>
+    <div class="upload-area">
+      <label for="videoUpload" class="upload-button">
+        Upload Video
+      </label>
+
+      <input
+        type="file"
+        id="videoUpload"
+        accept="video/mp4,video/webm,video/ogg"
+        hidden
+      >
+    </div>
+
+    <div class="video-box">
+      <div class="placeholder" id="placeholder">
+        <p>Video belum dipilih</p>
+        <p>Pilih tombol Upload Video untuk memutar video</p>
+      </div>
+
+      <video id="player" controls class="hidden">
+        Browser kamu tidak mendukung pemutar video.
+      </video>
+    </div>
+
+    <div class="video-info">
+      <h3 id="videoTitle">Video Player</h3>
+      <p id="videoDescription">
+        Pilih file video dari perangkat kamu untuk mulai menonton.
+      </p>
+    </div>
+  </main>
+
+  <footer>
+    Video Player &copy; 2026
+  </footer>
+
+  <div class="modal" id="ageModal">
+    <div class="modal-content">
+      <h2>Konfirmasi Usia 18+</h2>
+
+      <p>
+        Silakan konfirmasi bahwa kamu berusia
+        minimal 18 tahun sebelum melanjutkan.
+      </p>
+
+      <button class="continue-button" id="continueButton">
+        Saya berusia 18+ · LANJUT
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const upload = document.getElementById("videoUpload");
+    const player = document.getElementById("player");
+    const placeholder = document.getElementById("placeholder");
+    const title = document.getElementById("videoTitle");
+    const description =
+      document.getElementById("videoDescription");
+
+    let currentVideoURL = null;
+
+    document
+      .getElementById("continueButton")
+      .addEventListener("click", function () {
+        document.getElementById("ageModal").classList.add("hidden");
+      });
+
+    upload.addEventListener("change", function () {
+      const file = this.files[0];
+
+      if (!file) return;
+
+      if (!file.type.startsWith("video/")) {
+        alert("Silakan pilih file video yang valid.");
+        this.value = "";
+        return;
+      }
+
+      if (currentVideoURL) {
+        URL.revokeObjectURL(currentVideoURL);
+      }
+
+      currentVideoURL = URL.createObjectURL(file);
+      player.src = currentVideoURL;
+      player.classList.remove("hidden");
+      placeholder.classList.add("hidden");
+
+      title.textContent = file.name;
+      description.textContent =
+        "Ukuran file: " +
+        (file.size / (1024 * 1024)).toFixed(2) +
+        " MB";
+
+      player.load();
+    });
+
+    window.addEventListener("beforeunload", function () {
+      if (currentVideoURL) {
+        URL.revokeObjectURL(currentVideoURL);
+      }
+    });
+  </script>
+</body>
+</html>
