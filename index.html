@@ -1,337 +1,123 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#09090f">
-<title>LOKALVjjdeyy </title>
 
+<!-- KONFIRMASI USIA 18+ -->
 <style>
-* {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-}
-
-body {
-font-family: Arial, sans-serif;
-background: #09090f;
-color: #fff;
-min-height: 100vh;
-}
-
-header {
-padding: 22px 7%;
-display: flex;
-justify-content: space-between;
-align-items: center;
-border-bottom: 1px solid #252532;
-}
-
-.logo {
-font-size: 25px;
-font-weight: bold;
-color: #a78bfa;
-}
-
-.status {
-font-size: 13px;
-color: #aaa;
-}
-
-main {
-max-width: 1050px;
-margin: 45px auto;
-padding: 0 22px;
-}
-
-.intro {
-text-align: center;
-margin-bottom: 30px;
-}
-
-.intro h1 {
-font-size: clamp(28px, 5vw, 44px);
-margin-bottom: 12px;
-}
-
-.intro p {
-color: #a1a1b5;
-line-height: 1.7;
-}
-
-.ad-area {
-margin: 22px 0;
-padding: 18px;
-text-align: center;
-background: #12121b;
-border: 1px solid #28283a;
-border-radius: 12px;
-}
-
-.ad-label {
-color: #85859b;
-font-size: 11px;
-margin-bottom: 10px;
-text-transform: uppercase;
-letter-spacing: 2px;
-}
-
-.sponsor-link {
-display: inline-block;
-padding: 11px 20px;
-color: #fff;
-background: #49328a;
-text-decoration: none;
-border-radius: 8px;
-font-size: 14px;
-}
-
-.sponsor-link:hover {
-background: #6245b4;
-}
-
-.video-container {
-background: #15151f;
-padding: 10px;
-border: 1px solid #303044;
-border-radius: 18px;
-box-shadow: 0 20px 70px #0008;
-}
-
-video {
-display: block;
-width: 100%;
-aspect-ratio: 16 / 9;
-background: #000;
-border-radius: 10px;
-}
-
-.video-info {
-display: flex;
-align-items: center;
-justify-content: space-between;
-flex-wrap: wrap;
-gap: 15px;
-padding: 22px 5px 10px;
-}
-
-.video-info h2 {
-font-size: 20px;
-margin-bottom: 8px;
-}
-
-.video-info p {
-color: #a1a1b5;
-font-size: 14px;
-}
-
-.tag {
-background: #29213f;
-color: #c4b5fd;
-padding: 9px 14px;
-border-radius: 20px;
-font-size: 12px;
-}
-
-.notice {
-margin-top: 20px;
-background: #12121b;
-border: 1px solid #28283a;
-border-radius: 12px;
-padding: 18px;
-color: #aaa;
-font-size: 14px;
-line-height: 1.7;
-}
-
-footer {
-text-align: center;
-color: #77778b;
-padding: 25px 15px;
-font-size: 13px;
-}
-
-@media (max-width: 600px) {
-header {
-padding: 18px 20px;
-}
-
-main {
-margin: 30px auto;
-padding: 0 14px;
-}
-
-.video-container {
-padding: 6px;
-border-radius: 12px;
-}
-
-.video-info h2 {
-font-size: 18px;
-}
-}
-</style>
-</head>
-
-<body>
-<header>
-<div class="logo">LOKALVjjdeyy.</div>
-<div class="status">● TEMPAT Vjjdey LOKAL</div>
-</header>
-
-<main>
-<section class="intro">
-<h1></h1>
-<p>
-<br>
-</p>
-</section>
-
-<!-- IKLAN SHOPEE -->
-<section class="shopee-ad">
-  <div class="shopee-label">
-    
-  </div>
-
-  <h3>𝘈𝘚𝘜𝘗𝘈𝘕 𝘛𝘌𝘙𝘉𝘈𝘙𝘜 </h3>
-
-  <p>
-    👇
-  </p>
-
-  <a
-    class="shopee-button"
-    href="https://s.shopee.co.id/113gvbaqc9"
-    target="_blank"
-    rel="sponsored nofollow noopener noreferrer"
-  >
-    𝙏𝙊𝙉𝙏𝙊𝙉 𝙎𝙀𝙆𝘼𝙍𝘼𝙉𝙂《 🖲
-  </a>
-
-  <small class="shopee-disclaimer">
-    
-  </small>
-</section>
-
-<!-- AREA IKLAN TAMBAHAN -->
-<section class="ad-area">
-
-<!-- AREA IKLAN POPUNDER / SPONSOR -->
-<section class="ad-area">
-<div class="ad-label">Vjjdey lokal.</div>
-<a
-class="sponsor-link"
-href="https://cleavegrate.com/n48ddaqe2e?key=50475bbbba58881ff9d633fa4ed03766"
-target="_blank"
-rel="sponsored nofollow noopener noreferrer"
->
-𝙇𝘼𝙉𝙅𝙐𝙏𝘼𝙉 𝙑𝙄𝘿𝙀𝙊 ⏯️💦
-</a>
-</section>
-
-
-<!-- PEMUTAR VIDEO -->
-<style>
-  .video-container {
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    padding: 0;
-    background: #000;
-    overflow: hidden;
+  #ageGate {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.96);
+    color: #fff;
+    font-family: Arial, sans-serif;
   }
 
-  .video-container video {
+  #ageGate .age-box {
+    width: 100%;
+    max-width: 380px;
+    padding: 28px 22px;
+    text-align: center;
+    background: #181818;
+    border: 1px solid #444;
+    border-radius: 16px;
+    box-sizing: border-box;
+  }
+
+  #ageGate h2 {
+    margin: 0 0 14px;
+    font-size: 26px;
+    color: #ff4545;
+  }
+
+  #ageGate p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #ddd;
+  }
+
+  #ageGate button {
     display: block;
     width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9;
-    object-fit: contain;
+    padding: 14px;
+    margin-top: 12px;
+    border: 0;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
   }
 
-  /* Tampilan khusus HP */
-  @media (max-width: 600px) {
-    .video-container {
-      width: 100%;
-      border-radius: 0;
-    }
+  #confirm18 {
+    color: #fff;
+    background: #d92332;
+  }
 
-    .video-container video {
-      width: 100%;
-      height: auto;
-      aspect-ratio: 16 / 9;
-    }
+  #deny18 {
+    color: #222;
+    background: #eee;
+  }
+
+  #ageDenied {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000000;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: #111;
+    color: #fff;
+    text-align: center;
+    font-family: Arial, sans-serif;
   }
 </style>
 
-<section class="video-container">
-  <video
-    id="myVideo"
-    controls
-    playsinline
-    preload="metadata"
-  >
-    <source
-      src="https://videotourl.com/videos/1792140581408-a104b84c-d3aa-4ec5-a41e-72b0164be1f5.mp4"
-      type="video/mp4"
-    >
-    Browser Anda tidak mendukung pemutaran video.
-  </video>
-</section>
+<div id="ageGate" role="dialog"
+     aria-modal="true"
+     aria-labelledby="ageTitle">
+  <div class="age-box">
+    <h2 id="ageTitle">Konfirmasi Usia 18+</h2>
 
-</section>
+    <p>
+      Halaman ini hanya diperuntukkan bagi pengunjung
+      yang berusia 18 tahun ke atas.
+      Apakah Anda sudah berusia 18 tahun?
+    </p>
 
-<!-- AREA IKLAN TAMBAHAN -->
-<section class="ad-area">
-<div class="ad-label"></div>
-<p style="color:#aaa;font-size:13px">
+    <button id="confirm18">
+      Ya, saya berusia 18+
+    </button>
 
-</p>
-  <a
-    ></a>
-</section>
-
-<div class="notice" id="notice">
-
+    <button id="deny18">
+      Tidak, saya belum 18+
+    </button>
+  </div>
 </div>
-</main>
 
-<footer>
-© <span id="year"></span> Vjjdey 
-</footer>
+<div id="ageDenied">
+  <div>
+    <h2>Akses tidak diizinkan</h2>
+    <p>Anda harus berusia minimal 18 tahun untuk melanjutkan.</p>
+  </div>
+</div>
 
 <script>
-document.getElementById("year").textContent =
-new Date().getFullYear();
+  (function () {
+    const gate = document.getElementById("ageGate");
+    const denied = document.getElementById("ageDenied");
+    const confirmButton = document.getElementById("confirm18");
+    const denyButton = document.getElementById("deny18");
 
-const video = document.getElementById("myVideo");
-const notice = document.getElementById("notice");
+    confirmButton.addEventListener("click", function () {
+      gate.style.display = "none";
+    });
 
-video.addEventListener("error", function () {
-notice.textContent =
-"Video gagal dimuat. Periksa koneksi internet " +
-"atau pastikan link video masih aktif.";
-});
-
-video.addEventListener("playing", function () {
-notice.textContent =
-"Video sedang diputar. Selamat menonton!";
-});
-
-video.addEventListener("pause", function () {
-if (!video.ended && video.currentTime > 0) {
-notice.textContent = "Video dijeda.";
-}
-});
-
-video.addEventListener("ended", function () {
-notice.textContent = "Video selesai ditonton.";
-});
+    denyButton.addEventListener("click", function () {
+      gate.style.display = "none";
+      denied.style.display = "flex";
+    });
+  })();
 </script>
-
-<!-- SCRIPT IKLAN DIRECT ADSTERRA -->
-<script src="https://cleavegrate.com/81/86/7d/81867d74d56554ace10a2edb1a966b3d.js"></script>
-
-</body>
-</html>
+<!-- AKHIR KONFIRMASI USIA 18+ -->
