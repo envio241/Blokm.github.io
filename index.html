@@ -230,32 +230,55 @@ rel="sponsored nofollow noopener noreferrer"
 </a>
 </section>
 
-<!-- PEMUTAR VIDEO -->
-<section class="video-container">
-<video
-id="myVideo"
-controls
-playsinline
-preload="metadata"
->
-<source
-src="https://videotourl.com/videos/1791992724770-f5ebc618-9375-4a3f-ba87-ea712f93f8dc.mp4"
-type="video/mp4"  
->
-  </section>
 
 <!-- PEMUTAR VIDEO -->
+<style>
+  .video-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    background: #000;
+    overflow: hidden;
+  }
+
+  .video-container video {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+  }
+
+  /* Tampilan khusus HP */
+  @media (max-width: 600px) {
+    .video-container {
+      width: 100%;
+      border-radius: 0;
+    }
+
+    .video-container video {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+    }
+  }
+</style>
+
 <section class="video-container">
-<video
-id="myVideo"
-controls
-playsinline
-preload="metadata"
->
-<source
-src="https://videotourl.com/videos/1792140581408-a104b84c-d3aa-4ec5-a41e-72b0164be1f5.mp4"
-type="video/mp4"  
->  
+  <video
+    id="myVideo"
+    controls
+    playsinline
+    preload="metadata"
+  >
+    <source
+      src="https://videotourl.com/videos/1792140581408-a104b84c-d3aa-4ec5-a41e-72b0164be1f5.mp4"
+      type="video/mp4"
+    >
+    Browser Anda tidak mendukung pemutaran video.
+  </video>
+</section>
 
 </section>
 
