@@ -1,123 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background video Project</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="preloader">
+        <img src="preloader.gif" alt="preloader">
+    </div>
+    <header>
+        <video class="bg-video"  autoplay muted loop src="background-video.mp4"></video>
+        <div class="btn">
+            <h1> Click Me</h1> 
+        </div>
 
-<!-- KONFIRMASI USIA 18+ -->
-<style>
-  #ageGate {
-    position: fixed;
-    inset: 0;
-    z-index: 999999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.96);
-    color: #fff;
-    font-family: Arial, sans-serif;
-  }
 
-  #ageGate .age-box {
-    width: 100%;
-    max-width: 380px;
-    padding: 28px 22px;
-    text-align: center;
-    background: #181818;
-    border: 1px solid #444;
-    border-radius: 16px;
-    box-sizing: border-box;
-  }
+    </header>
 
-  #ageGate h2 {
-    margin: 0 0 14px;
-    font-size: 26px;
-    color: #ff4545;
-  }
-
-  #ageGate p {
-    font-size: 15px;
-    line-height: 1.6;
-    color: #ddd;
-  }
-
-  #ageGate button {
-    display: block;
-    width: 100%;
-    padding: 14px;
-    margin-top: 12px;
-    border: 0;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-
-  #confirm18 {
-    color: #fff;
-    background: #d92332;
-  }
-
-  #deny18 {
-    color: #222;
-    background: #eee;
-  }
-
-  #ageDenied {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 1000000;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    background: #111;
-    color: #fff;
-    text-align: center;
-    font-family: Arial, sans-serif;
-  }
-</style>
-
-<div id="ageGate" role="dialog"
-     aria-modal="true"
-     aria-labelledby="ageTitle">
-  <div class="age-box">
-    <h2 id="ageTitle">Konfirmasi Usia 18+</h2>
-
-    <p>
-      Halaman ini hanya diperuntukkan bagi pengunjung
-      yang berusia 18 tahun ke atas.
-      Apakah Anda sudah berusia 18 tahun?
-    </p>
-
-    <button id="confirm18">
-      Ya, saya berusia 18+
-    </button>
-
-    <button id="deny18">
-      Tidak, saya belum 18+
-    </button>
-  </div>
-</div>
-
-<div id="ageDenied">
-  <div>
-    <h2>Akses tidak diizinkan</h2>
-    <p>Anda harus berusia minimal 18 tahun untuk melanjutkan.</p>
-  </div>
-</div>
-
-<script>
-  (function () {
-    const gate = document.getElementById("ageGate");
-    const denied = document.getElementById("ageDenied");
-    const confirmButton = document.getElementById("confirm18");
-    const denyButton = document.getElementById("deny18");
-
-    confirmButton.addEventListener("click", function () {
-      gate.style.display = "none";
-    });
-
-    denyButton.addEventListener("click", function () {
-      gate.style.display = "none";
-      denied.style.display = "flex";
-    });
-  })();
-</script>
-<!-- AKHIR KONFIRMASI USIA 18+ -->
+    <script src="script.js"></script>
+</body>
+</html>
