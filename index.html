@@ -4,32 +4,65 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Videy Video Player</title>
+  <meta name="theme-color" content="#ffffff">
+  <title>Vldey - Video Player</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      padding: 20px;
-      background: #111;
-      color: white;
+      background: #fff;
+      color: #171717;
       font-family: Arial, sans-serif;
     }
 
-    .container {
-      max-width: 800px;
-      margin: 30px auto;
+    header {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      border-bottom: 1px solid #eee;
     }
 
-    h2 {
-      text-align: center;
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -1px;
     }
 
-    .video-box {
+    .logo span {
+      color: #666;
+    }
+
+    .upload {
+      background: #171717;
+      color: white;
+      border: 0;
+      padding: 11px 20px;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    main {
+      max-width: 900px;
+      padding: 24px 16px;
+      margin: 0 auto;
+    }
+
+    .player {
       width: 100%;
       aspect-ratio: 16 / 9;
-      background: #000;
-      border-radius: 12px;
+      background: #080808;
+      border-radius: 8px;
       overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     video {
@@ -38,85 +71,175 @@
       object-fit: contain;
     }
 
-    input, button {
-      box-sizing: border-box;
-      width: 100%;
+    .placeholder {
+      color: #aaa;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+    }
+
+    .url-box {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    input[type="url"] {
+      flex: 1;
+      min-width: 0;
       padding: 12px;
-      margin-top: 12px;
-      border-radius: 6px;
-      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 7px;
+      font-size: 14px;
     }
 
-    input {
-      border: 1px solid #444;
-      background: #222;
+    .play {
+      padding: 12px 18px;
+      background: #171717;
       color: white;
-    }
-
-    button {
-      border: none;
-      background: #e50914;
-      color: white;
+      border: 0;
+      border-radius: 7px;
       cursor: pointer;
     }
 
-    #status {
-      color: #ccc;
-      overflow-wrap: anywhere;
+    .note {
+      font-size: 12px;
+      line-height: 1.6;
+      color: #777;
+      margin-top: 14px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 12px;
+      color: #888;
+      font-size: 12px;
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 0 14px;
+      }
+
+      main {
+        padding: 18px 10px;
+      }
+
+      .url-box {
+        flex-direction: column;
+      }
+
+      .play {
+        width: 100%;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <h2>Videy Video Player</h2>
+  <header>
+    <div class="logo">V<span>ldey</span></div>
 
-    <div class="video-box">
-      <video id="videoPlayer" controls playsinline>
-        Browser kamu tidak mendukung pemutar video.
-      </video>
-    </div>
+    <button class="upload"
+      onclick="document.getElementById('fileInput').click()">
+      Upload
+    </button>
 
     <input
       type="file"
-      id="videoFile"
-      accept="video/*">
+      id="fileInput"
+      accept="video/mp4,video/webm,video/quicktime"
+      hidden
+    >
+  </header>
 
-    <button onclick="playVideo()">
-      Putar Video dari Galeri
-    </button>
+  <main>
+    <div class="player" id="playerBox">
+      <div class="placeholder" id="placeholder">
+        Browser kamu tidak mendukung pemutar video HTML5.
+      </div>
 
-    <p id="status">Pilih video dari galeri HP kamu.</p>
-  </div>
+      <video id="videoPlayer" controls playsinline
+        preload="metadata" hidden>
+        Browser kamu tidak mendukung pemutar video HTML5.
+      </video>
+    </div>
+
+    <div class="url-box">
+      <input
+        type="url"
+        id="videoUrl"
+        placeholder="Masukkan URL video langsung..."
+      >
+      <button class="play" onclick="playUrl()">
+        Putar Video
+      </button>
+    </div>
+
+    <p class="note">
+      Pilih video dari perangkat atau masukkan URL video langsung
+      yang dapat diakses dan diputar oleh browser.
+    </p>
+  </main>
+
+  <footer>
+    Video Player · 2026
+  </footer>
 
   <script>
-    let videoURL = null;
+    const video = document.getElementById("videoPlayer");
+    const placeholder = document.getElementById("placeholder");
+    const fileInput = document.getElementById("fileInput");
 
-    function playVideo() {
-      const fileInput = document.getElementById("videoFile");
-      const player = document.getElementById("videoPlayer");
-      const status = document.getElementById("status");
-      const file = fileInput.files[0];
+    let localVideoUrl = null;
 
-      if (!file) {
-        alert("Silakan pilih video dari galeri terlebih dahulu.");
-        return;
-      }
-
-      if (videoURL) {
-        URL.revokeObjectURL(videoURL);
-      }
-
-      videoURL = URL.createObjectURL(file);
-      player.src = videoURL;
-      player.load();
-
-      status.textContent = "Video dipilih: " + file.name;
-      player.play().catch(() => {
-        status.textContent =
-          "Video siap. Tekan tombol Play untuk memutarnya.";
-      });
+    function showPlayer() {
+      video.hidden = false;
+      placeholder.hidden = true;
     }
+
+    fileInput.addEventListener("change", function () {
+      const file = this.files[0];
+
+      if (!file) return;
+
+      if (localVideoUrl) {
+        URL.revokeObjectURL(localVideoUrl);
+      }
+
+      localVideoUrl = URL.createObjectURL(file);
+      video.src = localVideoUrl;
+      showPlayer();
+      video.play().catch(() => {});
+    });
+
+    function playUrl() {
+      const value = document
+        .getElementById("videoUrl").value.trim();
+
+      try {
+        const url = new URL(value);
+
+        if (!["https:", "http:"].includes(url.protocol)) {
+          throw new Error("URL tidak valid");
+        }
+
+        video.src = url.href;
+        showPlayer();
+        video.load();
+        video.play().catch(() => {});
+      } catch {
+        alert("Masukkan URL video yang valid.");
+      }
+    }
+
+    video.addEventListener("error", function () {
+      if (!video.currentSrc) return;
+
+      placeholder.textContent =
+        "Video tidak dapat diputar. Periksa URL atau format videonya.";
+      placeholder.hidden = false;
+    });
   </script>
 </body>
 </html>
