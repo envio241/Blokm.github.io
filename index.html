@@ -165,53 +165,6 @@ h3 {
   color: #ff3040;
 }
 
-/* ===== AREA IKLAN ===== */
-
-.ad-container {
-  margin: 18px 12px 22px;
-  padding: 14px;
-  background: #1c1c1c;
-  border: 1px solid #333;
-  border-radius: 12px;
-  text-align: center;
-}
-
-.ad-label {
-  display: block;
-  color: #999;
-  font-size: 10px;
-  margin-bottom: 10px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.ad-link {
-  display: block;
-  padding: 13px;
-  border-radius: 8px;
-  background: #ff3040;
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.ad-link.shopee {
-  background: #ee4d2d;
-}
-
-.ad-container small {
-  display: block;
-  color: #aaa;
-  font-size: 11px;
-  margin-top: 8px;
-}
-
-.ad-disclaimer {
-  color: #888;
-  font-size: 11px;
-  margin: 8px 0 0;
-}
-
 nav {
   position: fixed;
   bottom: 0;
@@ -260,57 +213,12 @@ nav a:first-child {
 <div class="categories">
   <button class="active" data-cat="Semua">🔥 Semua</button>
   <button data-cat="Trending">Trending</button>
-  <button data-cat="Lucu">💦 Lucu</button>
-  <button data-cat="Musik">💋 Musik</button>
-  <button data-cat="Gaming">🎮 Gaming</button>
+  <button data-cat="booming">💦 Lucu</button>
+  <button data-cat="hot">💋 Musik</button>
+  <button data-cat="terbaru">💔 Gaming</button>
 </div>
 
 <h3 id="heading">🔥 Video Viral Hari Ini</h3>
-
-<!-- =================================== -->
-<!-- IKLAN ADSTERRA DIRECT LINK           -->
-<!-- GANTI URL DI BAWAH DENGAN URL KAMU   -->
-<!-- =================================== -->
-
-<div class="ad-container">
-  <span class="ad-label">Iklan</span>
-
-  <a
-    class="ad-link"
-    href="https://cleavegrate.com/n48ddaqe2e?key=50475bbbba58881ff9d633fa4ed03766"
-    target="_blank"
-    rel="nofollow sponsored noopener"
-  >
-    🔥 Lihat Penawaran Menarik
-  </a>
-
-  <p class="ad-disclaimer">
-    Konten bersponsor
-  </p>
-</div>
-
-<!-- =================================== -->
-<!-- IKLAN SHOPEE AFFILIATE               -->
-<!-- GANTI URL DENGAN LINK AFFILIATE      -->
-<!-- =================================== -->
-
-<div class="ad-container">
-  <span class="ad-label">Shopee Affiliate · Iklan</span>
-
-  <a
-    class="ad-link shopee"
-    href="https://s.shopee.co.id/7Kxoc7JUIa"
-    target="_blank"
-    rel="nofollow sponsored noopener"
-  >
-    ASUPAN TERBAU
-  </a>
-
-  <small>
-    TONTON SEKARANG🕹
-  </small>
-</div>
-
 <main id="videos"></main>
 
 <nav>
@@ -321,12 +229,7 @@ nav a:first-child {
 </nav>
 
 <script>
-  
-// ==========================================
-// DATA VIDEO
-// Ganti URL dengan URL video MP4 milik kamu.
-// ==========================================
-
+// Ganti URL di bawah dengan URL file video MP4 milikmu.
 const data = [
   {
     title: "Video Viral Terbaru 🔥",
@@ -335,35 +238,314 @@ const data = [
     url: "https://videotourl.com/videos/1792302566798-2e56abba-e131-4d5c-986c-d492649a5bd2.mp4"
   },
   {
-    title: "🎬 Video Lucu",
+    title: "🎬",
     cat: "Lucu",
     views: "8,2 rb",
     url: "https://videotourl.com/videos/1792302529526-5e51f4e1-1b2a-440a-87aa-819df0a5ae10.mp4"
   },
   {
-    title: "🎬 Video Musik",
+    title: "🎬",
     cat: "Musik",
     views: "5,1 rb",
     url: "https://videotourl.com/videos/1792302458533-6550b982-a0f1-430a-a300-30a917707d2c.mp4"
   },
   {
-    title: "🎮 Video Gaming",
+    title: "🎬",
     cat: "Gaming",
     views: "3,7 rb",
-    url: "https://videotourl.com/videos/1792255230675-8941ef62-385a-4761-9e81-fe4312e5e308.mp4"
+    url: "https://videotourl.com/videos/1792255230675-8941ef62-385a-4761-9e81-fe4312e5e308.mp4",
+    
   }
 ];
 
-// ==========================================
-// KONFIGURASI SHOPEE DI ANTARA VIDEO
-// ==========================================
+let category = "Semua";
+let favoritesOnly = false;
+const favorites = new Set();
 
-// Ganti URL ini dengan link Shopee Affiliate kamu.
-const SHOPEE_AFFILIATE_URL =
-  "https://s.shopee.co.id/7Kxoc7JUIa";
+const videos = document.getElementById("videos");
+const search = document.getElementById("search");
+const heading = document.getElementById("heading");
 
-// Iklan muncul setelah setiap 2 video.
-// Ubah menjadi 1 jika ingin tampil lebih sering.
-const AD_INTERVAL = 2;
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[ch]);
+}
 
-let category = "
+// Hentikan semua video sebelum daftar digambar ulang.
+function stopVideos() {
+  videos.querySelectorAll("video").forEach(video => {
+    video.pause();
+  });
+}
+
+function render() {
+  const q = search.value.toLowerCase().trim();
+
+  const list = data
+    .map((v, index) => ({ ...v, index }))
+    .filter(v =>
+      (category === "Semua" || v.cat === category) &&
+      v.title.toLowerCase().includes(q) &&
+      (!favoritesOnly || favorites.has(v.index))
+    );
+
+  if (!list.length) {
+    videos.innerHTML =
+      '<div class="empty">Video tidak ditemukan.</div>';
+    return;
+  }
+
+  videos.innerHTML = list.map(v => `
+    <article class="video">
+      <div class="cover">
+        <video
+          src="${escapeHTML(v.url)}"
+          ${v.poster ? `poster="${escapeHTML(v.poster)}"` : ""}
+          controls
+          playsinline
+          preload="metadata"
+          data-index="${v.index}"
+          aria-label="${escapeHTML(v.title)}">
+          Browser kamu tidak mendukung video HTML5.
+        </video>
+
+        <button
+          class="play"
+          type="button"
+          data-action="play"
+          data-index="${v.index}"
+          aria-label="Putar video">
+          ▶
+        </button>
+      </div>
+
+      <div class="info">
+        <h4>${escapeHTML(v.title)}</h4>
+        <p>${escapeHTML(v.cat)} · ${escapeHTML(v.views)} tayangan</p>
+
+        <div class="actions">
+          <button
+            type="button"
+            data-action="like"
+            data-index="${v.index}"
+            class="${favorites.has(v.index) ? "liked" : ""}">
+            ${favorites.has(v.index) ? "♥ Disukai" : "♡ Suka"}
+          </button>
+
+          <button
+            type="button"
+            data-action="share"
+            data-index="${v.index}">
+            ↗ Bagikan
+          </button>
+        </div>
+      </div>
+    </article>
+  `).join("");
+}
+
+// Hanya satu video yang diputar pada satu waktu.
+videos.addEventListener("play", event => {
+  const current = event.target;
+  if (!(current instanceof HTMLVideoElement)) return;
+
+  videos.querySelectorAll("video").forEach(video => {
+    if (video !== current) video.pause();
+  });
+});
+
+// Sembunyikan tombol play ketika video mulai berjalan.
+videos.addEventListener("playing", event => {
+  const video = event.target;
+  if (!(video instanceof HTMLVideoElement)) return;
+
+  const button = video.closest(".cover")
+    ?.querySelector(".play");
+
+  if (button) button.classList.add("hidden");
+});
+
+// Tampilkan tombol play kembali saat video dijeda.
+videos.addEventListener("pause", event => {
+  const video = event.target;
+  if (!(video instanceof HTMLVideoElement)) return;
+
+  const button = video.closest(".cover")
+    ?.querySelector(".play");
+
+  if (button) button.classList.remove("hidden");
+});
+
+// Tampilkan tombol play kembali setelah video selesai.
+videos.addEventListener("ended", event => {
+  const video = event.target;
+  if (!(video instanceof HTMLVideoElement)) return;
+
+  const button = video.closest(".cover")
+    ?.querySelector(".play");
+
+  if (button) button.classList.remove("hidden");
+});
+
+// Tangani kegagalan memuat video.
+videos.addEventListener("error", event => {
+  const video = event.target;
+  if (!(video instanceof HTMLVideoElement)) return;
+
+  const cover = video.closest(".cover");
+  if (!cover) return;
+
+  let message = cover.querySelector(".video-error");
+
+  if (!message) {
+    message = document.createElement("div");
+    message.className = "video-error";
+    cover.appendChild(message);
+  }
+
+  message.textContent =
+    "Video gagal dimuat. Periksa URL, koneksi, dan format MP4.";
+});
+
+// Satu listener untuk play, suka, dan bagikan.
+videos.addEventListener("click", async event => {
+  const button = event.target.closest("button[data-action]");
+  if (!button) return;
+
+  const index = Number(button.dataset.index);
+  const action = button.dataset.action;
+
+  if (action === "play") {
+    const video = videos.querySelector(
+      `video[data-index="${index}"]`
+    );
+
+    if (!video) return;
+
+    if (video.paused) {
+      try {
+        await video.play();
+      } catch (error) {
+        console.error("Video gagal diputar:", error);
+        alert(
+          "Video tidak dapat diputar. Pastikan URL MP4 aktif dan bisa diakses."
+        );
+      }
+    } else {
+      video.pause();
+    }
+
+    return;
+  }
+
+  if (action === "like") {
+    if (favorites.has(index)) {
+      favorites.delete(index);
+    } else {
+      favorites.add(index);
+    }
+
+    render();
+    return;
+  }
+
+  if (action === "share") {
+    const video = data[index];
+
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: video.title,
+          url: video.url || location.href
+        });
+      } else if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(
+          video.url || location.href
+        );
+        alert("Link berhasil disalin.");
+      } else {
+        window.prompt("Salin link video:", video.url || location.href);
+      }
+    } catch (error) {
+      if (error.name !== "AbortError") {
+        window.prompt("Salin link video:", video.url || location.href);
+      }
+    }
+  }
+});
+
+// Filter kategori.
+document.querySelector(".categories").addEventListener("click", event => {
+  const button = event.target.closest("button[data-cat]");
+  if (!button) return;
+
+  stopVideos();
+  category = button.dataset.cat;
+  favoritesOnly = false;
+
+  document.querySelectorAll(".categories button").forEach(b => {
+    b.classList.toggle("active", b === button);
+  });
+
+  heading.textContent = category === "Semua"
+    ? "🔥 Video Viral Hari Ini"
+    : "🔥 Video " + category;
+
+  render();
+});
+
+// Navigasi bawah.
+document.querySelector("nav").addEventListener("click", event => {
+  const link = event.target.closest("a");
+  if (!link) return;
+
+  if (link.dataset.filter) {
+    event.preventDefault();
+    stopVideos();
+
+    category = link.dataset.filter;
+    favoritesOnly = false;
+
+    document.querySelectorAll(".categories button").forEach(b => {
+      b.classList.toggle("active", b.dataset.cat === category);
+    });
+
+    heading.textContent = category === "Semua"
+      ? "🔥 Video Viral Hari Ini"
+      : "🔥 Video " + category;
+
+    render();
+  }
+
+  if (link.dataset.favorites) {
+    event.preventDefault();
+    stopVideos();
+
+    favoritesOnly = true;
+    category = "Semua";
+
+    document.querySelectorAll(".categories button").forEach(b => {
+      b.classList.toggle("active", b.dataset.cat === "Semua");
+    });
+
+    heading.textContent = "♡ Video Favorit";
+    render();
+  }
+});
+
+// Pencarian.
+search.addEventListener("input", () => {
+  stopVideos();
+  render();
+});
+
+render();
+</script>
+
+</body>
+</html>
