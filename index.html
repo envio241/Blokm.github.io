@@ -1,182 +1,198 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101010">
 <title>ViralNow - Video Viral</title>
 
 <style>
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  background:#101010;
-  color:white;
-  font-family:Arial,sans-serif;
-  padding-bottom:75px
+* {
+  box-sizing: border-box;
 }
 
-header{
-  padding:17px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:#181818;
-  position:sticky;
-  top:0;
-  z-index:5
+body {
+  margin: 0;
+  padding-bottom: 75px;
+  background: #101010;
+  color: white;
+  font-family: Arial, sans-serif;
 }
 
-.logo{
-  font-size:23px;
-  font-weight:bold;
-  color:#ff3040
-}
-.logo span{color:white}
-
-.search{
-  background:#292929;
-  color:white;
-  border:0;
-  border-radius:20px;
-  padding:10px;
-  width:115px;
-  outline:none
+header {
+  padding: 17px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  background: #181818;
+  position: sticky;
+  top: 0;
+  z-index: 5;
 }
 
-.categories{
-  display:flex;
-  gap:10px;
-  padding:15px;
-  overflow-x:auto
+.logo {
+  font-size: 23px;
+  font-weight: bold;
+  color: #ff3040;
+  white-space: nowrap;
 }
 
-.categories button{
-  border:0;
-  border-radius:20px;
-  padding:9px 16px;
-  background:#292929;
-  color:white;
-  white-space:nowrap;
-  cursor:pointer
+.logo span {
+  color: white;
 }
 
-.categories button.active{background:#ff3040}
-
-h3{margin:5px 15px 15px}
-
-.video{
-  margin:0 12px 22px;
-  background:#1c1c1c;
-  border-radius:13px;
-  overflow:hidden
+.search {
+  background: #292929;
+  color: white;
+  border: 0;
+  border-radius: 20px;
+  padding: 10px 13px;
+  width: min(45%, 200px);
+  outline: none;
 }
 
-.cover{
-  position:relative;
-  background:#292929;
-  overflow:hidden;
-  min-height:180px
+.categories {
+  display: flex;
+  gap: 10px;
+  padding: 15px;
+  overflow-x: auto;
 }
 
-.cover video{
-  width:100%;
-  display:block;
-  max-height:480px;
-  object-fit:cover;
-  aspect-ratio:9/12;
-  cursor:pointer
+.categories button {
+  border: 0;
+  border-radius: 20px;
+  padding: 9px 16px;
+  background: #292929;
+  color: white;
+  white-space: nowrap;
+  cursor: pointer;
 }
 
-.play{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  width:65px;
-  height:65px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
-  color:white;
-  background:#0009;
-  border:2px solid #ffffff80;
-  border-radius:50%;
-  cursor:pointer;
-  z-index:2
+.categories button.active {
+  background: #ff3040;
 }
 
-.play.hidden{display:none}
-
-.placeholder{
-  aspect-ratio:9/12;
-  max-height:480px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#aaa;
-  text-align:center;
-  padding:20px
+h3 {
+  margin: 5px 15px 15px;
 }
 
-.info{padding:12px}
-
-.info h4{
-  margin:0 0 8px;
-  font-size:16px
+.video {
+  margin: 0 12px 22px;
+  background: #1c1c1c;
+  border-radius: 13px;
+  overflow: hidden;
 }
 
-.info p{
-  margin:0;
-  color:#aaa;
-  font-size:12px
+.cover {
+  position: relative;
+  background: #000;
+  overflow: hidden;
 }
 
-.actions{
-  display:flex;
-  justify-content:space-between;
-  padding-top:12px;
-  color:#ddd
+.cover video {
+  width: 100%;
+  display: block;
+  max-height: 75vh;
+  aspect-ratio: 9 / 12;
+  object-fit: contain;
+  background: #000;
 }
 
-.actions button{
-  background:none;
-  border:0;
-  color:white;
-  font-size:14px;
-  cursor:pointer
+.play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 65px;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  color: white;
+  background: #0009;
+  border: 2px solid #ffffff80;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 2;
 }
 
-.actions button.liked{color:#ff3040}
-
-nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  background:#181818;
-  display:flex;
-  justify-content:space-around;
-  padding:13px 5px;
-  z-index:10;
-  border-top:1px solid #333
+.play.hidden {
+  display: none;
 }
 
-nav a{
-  color:#bbb;
-  text-decoration:none;
-  font-size:12px;
-  text-align:center
+.video-error {
+  padding: 15px;
+  color: #ff7777;
+  text-align: center;
+  font-size: 13px;
+  background: #1c1c1c;
 }
 
-nav a:first-child{color:#ff3040}
+.info {
+  padding: 12px;
+}
 
-.empty{
-  padding:30px;
-  text-align:center;
-  color:#aaa
+.info h4 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+.info p {
+  margin: 0;
+  color: #aaa;
+  font-size: 12px;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 12px;
+  color: #ddd;
+}
+
+.actions button {
+  background: none;
+  border: 0;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.actions button.liked {
+  color: #ff3040;
+}
+
+nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #181818;
+  display: flex;
+  justify-content: space-around;
+  padding: 13px 5px;
+  z-index: 10;
+  border-top: 1px solid #333;
+}
+
+nav a {
+  color: #bbb;
+  text-decoration: none;
+  font-size: 12px;
+  text-align: center;
+}
+
+nav a:first-child {
+  color: #ff3040;
+}
+
+.empty {
+  padding: 30px;
+  text-align: center;
+  color: #aaa;
 }
 </style>
 </head>
@@ -188,6 +204,7 @@ nav a:first-child{color:#ff3040}
   <input
     class="search"
     id="search"
+    type="search"
     placeholder="Cari video..."
     aria-label="Cari video"
   >
@@ -201,7 +218,7 @@ nav a:first-child{color:#ff3040}
   <button data-cat="Gaming">🎮 Gaming</button>
 </div>
 
-<h3>🔥 Video Viral Hari Ini</h3>
+<h3 id="heading">🔥 Video Viral Hari Ini</h3>
 <main id="videos"></main>
 
 <nav>
@@ -212,35 +229,32 @@ nav a:first-child{color:#ff3040}
 </nav>
 
 <script>
-// GANTI URL VIDEO DAN THUMBNAIL DENGAN MILIKMU
+// Ganti URL di bawah dengan URL file video MP4 milikmu.
 const data = [
   {
-    title:"Video Viral Terbaru 🔥",
-    cat:"Trending",
-    views:"12,5 rb",
-    url:"https://videotourl.com/videos/1792302566798-2e56abba-e131-4d5c-986c-d492649a5bd2.mp4",
-
+    title: "Video Viral Terbaru 🔥",
+    cat: "Trending",
+    views: "12,5 rb",
+    url: "https://videotourl.com/videos/1792302566798-2e56abba-e131-4d5c-986c-d492649a5bd2.mp4"
   },
   {
-    title:"Video Lucu Bikin Ngakak 😂",
-    cat:"Lucu",
-    views:"8,2 rb",
-    url:"https://videotourl.com/videos/1792302529526-5e51f4e1-1b2a-440a-87aa-819df0a5ae10.mp4",
-       
+    title: "Video Lucu Bikin Ngakak 😂",
+    cat: "Lucu",
+    views: "8,2 rb",
+    url: "https://videotourl.com/videos/1792302529526-5e51f4e1-1b2a-440a-87aa-819df0a5ae10.mp4"
   },
   {
-    title:"Musik Populer Minggu Ini 🎵",
-    cat:"Musik",
-    views:"5,1 rb",
-    url:"https://videotourl.com/videos/1792302458533-6550b982-a0f1-430a-a300-30a917707d2c.mp4",
-    
+    title: "Musik Populer Minggu Ini 🎵",
+    cat: "Musik",
+    views: "5,1 rb",
+    url: "https://videotourl.com/videos/1792302458533-6550b982-a0f1-430a-a300-30a917707d2c.mp4"
   },
   {
-    title:"Momen Gaming Seru 🎮",
-    cat:"Gaming",
-    views:"3,7 rb",
-    url:"https://videotourl.com/videos/1792255230675-8941ef62-385a-4761-9e81-fe4312e5e308.mp4",
-    poster:"https://images.unsplash.com/photo-1542751371-adc38448a05e?w=720"
+    title: "Momen Gaming Seru 🎮",
+    cat: "Gaming",
+    views: "3,7 rb",
+    url: "https://videotourl.com/videos/1792255230675-8941ef62-385a-4761-9e81-fe4312e5e308.mp4",
+    poster: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=720"
   }
 ];
 
@@ -250,30 +264,37 @@ const favorites = new Set();
 
 const videos = document.getElementById("videos");
 const search = document.getElementById("search");
+const heading = document.getElementById("heading");
 
-// Mencegah teks dari data ditafsirkan sebagai HTML.
-function escapeHTML(value){
-  return String(value).replace(/[&<>"']/g, ch => ({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#39;"
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
   })[ch]);
 }
 
-function render(){
+// Hentikan semua video sebelum daftar digambar ulang.
+function stopVideos() {
+  videos.querySelectorAll("video").forEach(video => {
+    video.pause();
+  });
+}
+
+function render() {
   const q = search.value.toLowerCase().trim();
 
   const list = data
-    .map((v,index)=>({...v,index}))
+    .map((v, index) => ({ ...v, index }))
     .filter(v =>
       (category === "Semua" || v.cat === category) &&
       v.title.toLowerCase().includes(q) &&
       (!favoritesOnly || favorites.has(v.index))
     );
 
-  if(!list.length){
+  if (!list.length) {
     videos.innerHTML =
       '<div class="empty">Video tidak ditemukan.</div>';
     return;
@@ -282,30 +303,25 @@ function render(){
   videos.innerHTML = list.map(v => `
     <article class="video">
       <div class="cover">
-        ${
-          v.url
-          ? `
-            <video
-              controls
-              playsinline
-              preload="none"
-              poster="${escapeHTML(v.poster)}"
-              data-index="${v.index}"
-              aria-label="${escapeHTML(v.title)}">
-              Browser kamu tidak mendukung video HTML5.
-            </video>
-            <button
-              class="play"
-              data-action="play"
-              data-index="${v.index}"
-              aria-label="Putar video">▶</button>
-          `
-          : `
-            <div class="placeholder">
-              Video belum tersedia
-            </div>
-          `
-        }
+        <video
+          src="${escapeHTML(v.url)}"
+          ${v.poster ? `poster="${escapeHTML(v.poster)}"` : ""}
+          controls
+          playsinline
+          preload="metadata"
+          data-index="${v.index}"
+          aria-label="${escapeHTML(v.title)}">
+          Browser kamu tidak mendukung video HTML5.
+        </video>
+
+        <button
+          class="play"
+          type="button"
+          data-action="play"
+          data-index="${v.index}"
+          aria-label="Putar video">
+          ▶
+        </button>
       </div>
 
       <div class="info">
@@ -314,6 +330,7 @@ function render(){
 
         <div class="actions">
           <button
+            type="button"
             data-action="like"
             data-index="${v.index}"
             class="${favorites.has(v.index) ? "liked" : ""}">
@@ -321,6 +338,7 @@ function render(){
           </button>
 
           <button
+            type="button"
             data-action="share"
             data-index="${v.index}">
             ↗ Bagikan
@@ -331,92 +349,131 @@ function render(){
   `).join("");
 }
 
-// Memutar video dan menghentikan video lainnya.
+// Hanya satu video yang diputar pada satu waktu.
 videos.addEventListener("play", event => {
   const current = event.target;
+  if (!(current instanceof HTMLVideoElement)) return;
 
-  if(current.tagName !== "VIDEO") return;
-
-  document.querySelectorAll("#videos video").forEach(video => {
-    if(video !== current) video.pause();
+  videos.querySelectorAll("video").forEach(video => {
+    if (video !== current) video.pause();
   });
 });
 
-// Sembunyikan tombol play saat video berjalan.
+// Sembunyikan tombol play ketika video mulai berjalan.
 videos.addEventListener("playing", event => {
   const video = event.target;
-  if(video.tagName !== "VIDEO") return;
+  if (!(video instanceof HTMLVideoElement)) return;
 
-  const button = videos.querySelector(
-    `.play[data-index="${video.dataset.index}"]`
-  );
+  const button = video.closest(".cover")
+    ?.querySelector(".play");
 
-  if(button) button.classList.add("hidden");
+  if (button) button.classList.add("hidden");
 });
 
-// Tampilkan kembali tombol play ketika video dijeda.
+// Tampilkan tombol play kembali saat video dijeda.
 videos.addEventListener("pause", event => {
   const video = event.target;
-  if(video.tagName !== "VIDEO") return;
+  if (!(video instanceof HTMLVideoElement)) return;
 
-  const button = videos.querySelector(
-    `.play[data-index="${video.dataset.index}"]`
-  );
+  const button = video.closest(".cover")
+    ?.querySelector(".play");
 
-  if(button) button.classList.remove("hidden");
+  if (button) button.classList.remove("hidden");
 });
 
-// Klik tombol play.
-videos.addEventListener("click", event => {
-  const button = event.target.closest('[data-action="play"]');
-  if(!button) return;
+// Tampilkan tombol play kembali setelah video selesai.
+videos.addEventListener("ended", event => {
+  const video = event.target;
+  if (!(video instanceof HTMLVideoElement)) return;
 
-  const video = videos.querySelector(
-    `video[data-index="${button.dataset.index}"]`
-  );
+  const button = video.closest(".cover")
+    ?.querySelector(".play");
 
-  if(video){
-    video.play().catch(() => {
-      alert("Video gagal diputar. Periksa URL video MP4.");
-    });
+  if (button) button.classList.remove("hidden");
+});
+
+// Tangani kegagalan memuat video.
+videos.addEventListener("error", event => {
+  const video = event.target;
+  if (!(video instanceof HTMLVideoElement)) return;
+
+  const cover = video.closest(".cover");
+  if (!cover) return;
+
+  let message = cover.querySelector(".video-error");
+
+  if (!message) {
+    message = document.createElement("div");
+    message.className = "video-error";
+    cover.appendChild(message);
   }
+
+  message.textContent =
+    "Video gagal dimuat. Periksa URL, koneksi, dan format MP4.";
 });
 
-// Tombol suka dan bagikan.
+// Satu listener untuk play, suka, dan bagikan.
 videos.addEventListener("click", async event => {
-  const button = event.target.closest("[data-action]");
-  if(!button) return;
+  const button = event.target.closest("button[data-action]");
+  if (!button) return;
 
   const index = Number(button.dataset.index);
   const action = button.dataset.action;
 
-  if(action === "like"){
-    if(favorites.has(index)){
-      favorites.delete(index);
-    }else{
-      favorites.add(index);
+  if (action === "play") {
+    const video = videos.querySelector(
+      `video[data-index="${index}"]`
+    );
+
+    if (!video) return;
+
+    if (video.paused) {
+      try {
+        await video.play();
+      } catch (error) {
+        console.error("Video gagal diputar:", error);
+        alert(
+          "Video tidak dapat diputar. Pastikan URL MP4 aktif dan bisa diakses."
+        );
+      }
+    } else {
+      video.pause();
     }
-    render();
+
+    return;
   }
 
-  if(action === "share"){
+  if (action === "like") {
+    if (favorites.has(index)) {
+      favorites.delete(index);
+    } else {
+      favorites.add(index);
+    }
+
+    render();
+    return;
+  }
+
+  if (action === "share") {
     const video = data[index];
 
-    try{
-      if(navigator.share){
+    try {
+      if (navigator.share) {
         await navigator.share({
-          title:video.title,
-          url:video.url || location.href
+          title: video.title,
+          url: video.url || location.href
         });
-      }else{
+      } else if (navigator.clipboard && window.isSecureContext) {
         await navigator.clipboard.writeText(
           video.url || location.href
         );
         alert("Link berhasil disalin.");
+      } else {
+        window.prompt("Salin link video:", video.url || location.href);
       }
-    }catch(error){
-      if(error.name !== "AbortError"){
-        prompt("Salin link:", video.url || location.href);
+    } catch (error) {
+      if (error.name !== "AbortError") {
+        window.prompt("Salin link video:", video.url || location.href);
       }
     }
   }
@@ -425,13 +482,19 @@ videos.addEventListener("click", async event => {
 // Filter kategori.
 document.querySelector(".categories").addEventListener("click", event => {
   const button = event.target.closest("button[data-cat]");
-  if(!button) return;
+  if (!button) return;
 
+  stopVideos();
   category = button.dataset.cat;
   favoritesOnly = false;
 
-  document.querySelectorAll(".categories button")
-    .forEach(b => b.classList.toggle("active", b === button));
+  document.querySelectorAll(".categories button").forEach(b => {
+    b.classList.toggle("active", b === button);
+  });
+
+  heading.textContent = category === "Semua"
+    ? "🔥 Video Viral Hari Ini"
+    : "🔥 Video " + category;
 
   render();
 });
@@ -439,36 +502,47 @@ document.querySelector(".categories").addEventListener("click", event => {
 // Navigasi bawah.
 document.querySelector("nav").addEventListener("click", event => {
   const link = event.target.closest("a");
-  if(!link) return;
+  if (!link) return;
 
-  if(link.dataset.filter){
+  if (link.dataset.filter) {
+    event.preventDefault();
+    stopVideos();
+
     category = link.dataset.filter;
     favoritesOnly = false;
 
-    document.querySelectorAll(".categories button")
-      .forEach(b => b.classList.toggle(
-        "active", b.dataset.cat === category
-      ));
+    document.querySelectorAll(".categories button").forEach(b => {
+      b.classList.toggle("active", b.dataset.cat === category);
+    });
+
+    heading.textContent = category === "Semua"
+      ? "🔥 Video Viral Hari Ini"
+      : "🔥 Video " + category;
 
     render();
   }
 
-  if(link.dataset.favorites){
+  if (link.dataset.favorites) {
     event.preventDefault();
+    stopVideos();
+
     favoritesOnly = true;
     category = "Semua";
 
-    document.querySelectorAll(".categories button")
-      .forEach(b => b.classList.toggle(
-        "active", b.dataset.cat === "Semua"
-      ));
+    document.querySelectorAll(".categories button").forEach(b => {
+      b.classList.toggle("active", b.dataset.cat === "Semua");
+    });
 
+    heading.textContent = "♡ Video Favorit";
     render();
   }
 });
 
 // Pencarian.
-search.addEventListener("input", render);
+search.addEventListener("input", () => {
+  stopVideos();
+  render();
+});
 
 render();
 </script>
