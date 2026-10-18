@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -5,6 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#101010">
 <title>ViralNow - Video Viral</title>
+
+<!-- Adsterra Popunder -->
+<script src="https://cleavegrate.com/81/86/7d/81867d74d56554ace10a2edb1a966b3d.js"></script>
 
 <style>
 * {
@@ -75,6 +79,38 @@ header {
 
 h3 {
   margin: 5px 15px 15px;
+}
+
+/* Shopee Affiliate */
+.shopee-promo {
+  margin: 0 12px 22px;
+  padding: 18px 14px;
+  text-align: center;
+  background: #251713;
+  border: 1px solid #ee4d2d;
+  border-radius: 13px;
+}
+
+.shopee-promo p {
+  color: #fff;
+  margin: 0 0 13px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.shopee-promo a {
+  display: inline-block;
+  background: #ee4d2d;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 12px 22px;
+  border-radius: 25px;
+  transition: background 0.2s;
+}
+
+.shopee-promo a:hover {
+  background: #d73216;
 }
 
 .video {
@@ -213,12 +249,25 @@ nav a:first-child {
 <div class="categories">
   <button class="active" data-cat="Semua">🔥 Semua</button>
   <button data-cat="Trending">Trending</button>
-  <button data-cat="booming">💦 Lucu</button>
-  <button data-cat="hot">💋 Musik</button>
-  <button data-cat="terbaru">💔 Gaming</button>
+  <button data-cat="Lucu">💦 Lucu</button>
+  <button data-cat="Musik">💋 Musik</button>
+  <button data-cat="Gaming">💔 Gaming</button>
 </div>
 
 <h3 id="heading">🔥 Video Viral Hari Ini</h3>
+
+<!-- Tombol Shopee Affiliate -->
+<div class="shopee-promo">
+  <p>🛍️ Temukan produk menarik dan penawaran di Shopee!</p>
+  <a
+    href="https://s.shopee.co.id/gQufsrGNE"
+    target="_blank"
+    rel="nofollow sponsored noopener"
+  >
+    🛒 BELANJA SEKARANG
+  </a>
+</div>
+
 <main id="videos"></main>
 
 <nav>
@@ -229,7 +278,7 @@ nav a:first-child {
 </nav>
 
 <script>
-// Ganti URL di bawah dengan URL file video MP4 milikmu.
+// Data video asli kamu
 const data = [
   {
     title: "Video Viral Terbaru 🔥",
@@ -238,23 +287,22 @@ const data = [
     url: "https://videotourl.com/videos/1792302566798-2e56abba-e131-4d5c-986c-d492649a5bd2.mp4"
   },
   {
-    title: "🎬",
+    title: "🎬 Video Lucu",
     cat: "Lucu",
     views: "8,2 rb",
     url: "https://videotourl.com/videos/1792302529526-5e51f4e1-1b2a-440a-87aa-819df0a5ae10.mp4"
   },
   {
-    title: "🎬",
+    title: "🎬 Video Musik",
     cat: "Musik",
     views: "5,1 rb",
     url: "https://videotourl.com/videos/1792302458533-6550b982-a0f1-430a-a300-30a917707d2c.mp4"
   },
   {
-    title: "🎬",
+    title: "🎬 Video Gaming",
     cat: "Gaming",
     views: "3,7 rb",
-    url: "https://videotourl.com/videos/1792255230675-8941ef62-385a-4761-9e81-fe4312e5e308.mp4",
-    
+    url: "https://videotourl.com/videos/1792255230675-8941ef62-385a-4761-9e81-fe4312e5e308.mp4"
   }
 ];
 
@@ -276,7 +324,6 @@ function escapeHTML(value) {
   })[ch]);
 }
 
-// Hentikan semua video sebelum daftar digambar ulang.
 function stopVideos() {
   videos.querySelectorAll("video").forEach(video => {
     video.pause();
@@ -290,7 +337,7 @@ function render() {
     .map((v, index) => ({ ...v, index }))
     .filter(v =>
       (category === "Semua" || v.cat === category) &&
-      v.title.toLowerCase().includes(q) &&
+      (v.title + " " + v.cat).toLowerCase().includes(q) &&
       (!favoritesOnly || favorites.has(v.index))
     );
 
@@ -305,7 +352,6 @@ function render() {
       <div class="cover">
         <video
           src="${escapeHTML(v.url)}"
-          ${v.poster ? `poster="${escapeHTML(v.poster)}"` : ""}
           controls
           playsinline
           preload="metadata"
@@ -349,7 +395,7 @@ function render() {
   `).join("");
 }
 
-// Hanya satu video yang diputar pada satu waktu.
+// Hanya satu video diputar pada satu waktu.
 videos.addEventListener("play", event => {
   const current = event.target;
   if (!(current instanceof HTMLVideoElement)) return;
@@ -359,40 +405,30 @@ videos.addEventListener("play", event => {
   });
 });
 
-// Sembunyikan tombol play ketika video mulai berjalan.
 videos.addEventListener("playing", event => {
   const video = event.target;
   if (!(video instanceof HTMLVideoElement)) return;
 
-  const button = video.closest(".cover")
-    ?.querySelector(".play");
-
+  const button = video.closest(".cover")?.querySelector(".play");
   if (button) button.classList.add("hidden");
 });
 
-// Tampilkan tombol play kembali saat video dijeda.
 videos.addEventListener("pause", event => {
   const video = event.target;
   if (!(video instanceof HTMLVideoElement)) return;
 
-  const button = video.closest(".cover")
-    ?.querySelector(".play");
-
+  const button = video.closest(".cover")?.querySelector(".play");
   if (button) button.classList.remove("hidden");
 });
 
-// Tampilkan tombol play kembali setelah video selesai.
 videos.addEventListener("ended", event => {
   const video = event.target;
   if (!(video instanceof HTMLVideoElement)) return;
 
-  const button = video.closest(".cover")
-    ?.querySelector(".play");
-
+  const button = video.closest(".cover")?.querySelector(".play");
   if (button) button.classList.remove("hidden");
 });
 
-// Tangani kegagalan memuat video.
 videos.addEventListener("error", event => {
   const video = event.target;
   if (!(video instanceof HTMLVideoElement)) return;
@@ -412,7 +448,7 @@ videos.addEventListener("error", event => {
     "Video gagal dimuat. Periksa URL, koneksi, dan format MP4.";
 });
 
-// Satu listener untuk play, suka, dan bagikan.
+// Tombol putar, suka, dan bagikan.
 videos.addEventListener("click", async event => {
   const button = event.target.closest("button[data-action]");
   if (!button) return;
@@ -432,14 +468,11 @@ videos.addEventListener("click", async event => {
         await video.play();
       } catch (error) {
         console.error("Video gagal diputar:", error);
-        alert(
-          "Video tidak dapat diputar. Pastikan URL MP4 aktif dan bisa diakses."
-        );
+        alert("Video tidak dapat diputar. Periksa URL MP4.");
       }
     } else {
       video.pause();
     }
-
     return;
   }
 
@@ -461,19 +494,17 @@ videos.addEventListener("click", async event => {
       if (navigator.share) {
         await navigator.share({
           title: video.title,
-          url: video.url || location.href
+          url: video.url
         });
       } else if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(
-          video.url || location.href
-        );
-        alert("Link berhasil disalin.");
+        await navigator.clipboard.writeText(video.url);
+        alert("Link video berhasil disalin.");
       } else {
-        window.prompt("Salin link video:", video.url || location.href);
+        window.prompt("Salin link video:", video.url);
       }
     } catch (error) {
       if (error.name !== "AbortError") {
-        window.prompt("Salin link video:", video.url || location.href);
+        window.prompt("Salin link video:", video.url);
       }
     }
   }
@@ -538,7 +569,7 @@ document.querySelector("nav").addEventListener("click", event => {
   }
 });
 
-// Pencarian.
+// Pencarian video.
 search.addEventListener("input", () => {
   stopVideos();
   render();
