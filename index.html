@@ -414,7 +414,18 @@ cards.forEach(card => {
     external.hidden = false;
   }
 
-  card.querySelector(".play").addEventListener("click", () => {
+ 
+const MONETAG_LINK = "https://uplcm.com/4/11810812";
+
+card.querySelector(".play").addEventListener("click", () => {
+  if (MONETAG_LINK.startsWith("https://") ||
+      MONETAG_LINK.startsWith("http://")) {
+    window.open(MONETAG_LINK, "_blank", "noopener,noreferrer");
+  } else {
+    alert("Masukkan link Monetag terlebih dahulu.");
+  }
+});
+
     if (!card.dataset.video) {
       notice.textContent = "Alamat video belum diisi.";
       return;
